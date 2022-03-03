@@ -8,5 +8,6 @@ router.register('colleges', views.CollegeApiView)
 router.register('students', views.StudentApiView)
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('auth/', include('rest_framework.urls')),
+    path('', include(router.urls)),
 ]

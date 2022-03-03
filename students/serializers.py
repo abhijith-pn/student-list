@@ -3,13 +3,13 @@ from rest_framework import serializers
 from .models import College, Student
 
 
-class CollegeSerializer(serializers.ModelSerializer):
+class CollegeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = College
-        fields = ('id', 'name')
+        fields = ('id', 'url', 'name')
 
 
-class StudentSerializer(serializers.ModelSerializer):
+class StudentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Student
-        fields = ('id', 'name', 'gpa', 'college')
+        fields = ('id', 'url', 'name', 'gpa', 'college')
