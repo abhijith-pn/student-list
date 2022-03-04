@@ -40,10 +40,10 @@
         {% if user.is_active and user.is_superuser %}
         | <a href="{% url 'admin:index' %}">Admin Site</a> |
         {% endif %}
-        <a href="{% if links.logout %}{{links.logout}}{% else %}{% url 'logout' %}{% endif %}">Log out</a>
+        <a href="{% if links_logout %}{{links_logout}}{% else %}{% url 'logout' %}{% endif %}">Log out</a>
         {% else %}
-        <a href="{% if links.login %}{{ links.login}}{% else %}{% url 'login' %}{% endif %}">Log in</a> |
-        <a href="{% if links.register %}{{ links.register}}{% else %}{% url 'register' %}{% endif %}">Register</a>
+        <a href="{% if links_login %}{{ links_login}}{% else %}{% url 'login' %}{% endif %}">Log in</a> |
+        <a href="{% if links_register %}{{ links_register}}{% else %}{% url 'register' %}{% endif %}">Register</a>
         {% endif %}
       </div>
       {% endblock userlinks %}

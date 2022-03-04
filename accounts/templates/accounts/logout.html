@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'index' %}">Home</a>
+</div>
+{% endblock %}
+
+{% block title %}Logged out{% endblock %}
+{% block userlinks %}{% endblock userlinks %}
+
+{% block content_title %}{% endblock %}
+{% block content %}
+<p>Thank you for visiting!</p>
+<p>
+  <a href="{% url 'login' %}">Login</a>
+</p>
+{% endblock %}

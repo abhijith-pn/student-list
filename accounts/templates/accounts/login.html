@@ -1,0 +1,61 @@
+{% extends "core/base.html" %}
+{% load i18n static %}
+
+{% block title %}Log in{% endblock %}
+{% block userlinks %}{% endblock userlinks %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "accounts/css/login.css" %}">
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+  Please correct the error(s) below.
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+  {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div id="content-main">
+  
+  {% if user.is_authenticated %}
+  <p class="errornote">
+    You are authenticated as {{ username }}.
+    Would you like to log in to a different account?
+  </p>
+  {% endif %}
+  
+  <form action="" method="post" id="login-form">
+    {% csrf_token %}
+    <div class="form-row">
+      {{ form.username.errors }}
+      {{ form.username.label_tag }} {{ form.username }}
+    </div>
+    <div class="form-row">
+      {{ form.password.errors }}
+      {{ form.password.label_tag }} {{ form.password }}
+    </div>
+    <div class="submit-row">
+      <input type="submit" value="Log in">
+    </div>
+    <div class="form-row">
+      Don't have an account? Register <a href="{% url 'register' %}">here</a>.
+      <input type="hidden" name="next" value="{{ next }}">
+    </div>
+  </form>
+  
+</div>
+{% endblock %}

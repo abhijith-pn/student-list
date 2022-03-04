@@ -1,0 +1,65 @@
+{% extends "core/base.html" %}
+{% load i18n static %}
+
+{% block title %}Register{% endblock %}
+{% block userlinks %}{% endblock userlinks %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "accounts/css/register.css" %}">
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} register{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+  Please correct the error(s) below.
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+  {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div id="content-main">
+  
+  {% if user.is_authenticated %}
+  <p class="errornote">
+    You are authenticated as {{ username }}.
+    Would you still like to create a different account?
+  </p>
+  {% endif %}
+  
+  <form action="" method="post" id="register-form">
+    {% csrf_token %}
+    <div class="form-row">
+      {{ form.username.errors }}
+      {{ form.username.label_tag }} {{ form.username }}
+    </div>
+    <div class="form-row">
+      {{ form.password1.errors }}
+      {{ form.password1.label_tag }} {{ form.password1 }}
+    </div>
+    <div class="form-row">
+      {{ form.password2.errors }}
+      {{ form.password2.label_tag }} {{ form.password2 }}
+    </div>
+    <div class="submit-row">
+      <input type="submit" value="Register">
+    </div>
+    <div class="form-row">
+      Already have an account? <a href="{% url 'login' %}">log in</a>.
+      <input type="hidden" name="next" value="{{ next }}">
+    </div>
+  </form>
+  
+</div>
+{% endblock %}
