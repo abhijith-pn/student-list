@@ -1,0 +1,88 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>
+    {% block title %}
+    {% if subtitle %}{{ subtitle }} | {% endif %}
+    Student List
+    {% endblock title %}
+  </title>
+  <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock stylesheet %}" />
+  {% block extrastyle %}
+  <link rel="stylesheet" type="text/css" href="{% static "core/css/base.css" %}" />
+  {% endblock extrastyle %}
+  {% block extrahead %}{% endblock extrahead %}
+  {% block responsive %}
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/responsive.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "core/css/responsive.css" %}" />
+  {% endblock responsive %}
+</head>
+
+<body class="{% block bodyclass %}{% endblock bodyclass %}">
+  <!-- Container -->
+  <div id="container">
+    
+    <!-- Header -->
+    {% block header %}
+    <div id="header">
+      <div id="branding">
+        {% block branding %}
+        <h1 id="site-name"><a href="{% url 'index' %}">{{ site_header|default:_('Student List') }}</a></h1>
+        {% endblock branding %}
+      </div>
+      {% block userlinks %}
+      <div id="user-tools">
+        {% if user.is_authenticated %}
+        hello, {{ user.username }}
+        {% if user.is_active and user.is_superuser %}
+        | <a href="{% url 'admin:index' %}">Admin Site</a> |
+        {% endif %}
+        <a href="{% if links.logout %}{{links.logout}}{% else %}{% url 'logout' %}{% endif %}">Log out</a>
+        {% else %}
+        <a href="{% if links.login %}{{ links.login}}{% else %}{% url 'login' %}{% endif %}">Log in</a> |
+        <a href="{% if links.register %}{{ links.register}}{% else %}{% url 'register' %}{% endif %}">Register</a>
+        {% endif %}
+      </div>
+      {% endblock userlinks %}
+    </div>
+    {% endblock header %}
+    <!-- END Header -->
+    
+    {% block breadcrumbs %}
+    <div class="breadcrumbs">
+      <a href="{% url 'index' %}">Home</a>
+      {% if title %} &rsaquo; {{ title }}{% endif %}
+    </div>
+    {% endblock breadcrumbs %}
+    
+    <div class="main" id="main">
+      <div class="content">
+        {% block messages %}
+        {% if messages %}
+        <ul class="messagelist">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|capfirst }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endblock messages %}
+        <!-- Content -->
+        <div id="content" class="{% block coltype %}colM{% endblock coltype%}">
+          {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock content_title%}
+          {% block content %}
+          {{ content }}
+          {% endblock content %}
+          {% block sidebar %}{% endblock sidebar %}
+          <br class="clear">
+        </div>
+        <!-- END Content -->
+        {% block footer %}<div id="footer"></div>{% endblock footer %}
+      </div>
+    </div>
+  </div>
+  <!-- END Container -->
+</body>
+</html>
