@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'core/css/main.css' %}">
+{% endblock extrastyle %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<ul>
+    <h2>API Endpoints:</h2>
+    <li>
+        <a href="{% url 'college-list' %}">College API list</a>
+    </li>
+    <li>
+        <a href="{% url 'student-list' %}">Student API list</a>
+    </li>
+</ul>
+{% else %}
+<p>
+    Please <a href="{% url 'login' %}">login</a> to get the API tokens
+</p>
+{% endif %}
+{% endblock content %}
